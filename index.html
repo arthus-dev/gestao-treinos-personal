@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Personal System - Gestão de Treinos</h1>
+
+    <form id="formCadastro">
+        <input type="text" id="nomeAluno" placeholder="Nome do Aluno" required>
+        <input type="number" id="idadeAluno" placeholder="Idade" required>
+        <input type="text" id="objetivoAluno" placeholder="Objetivo (ex: Emagrecer)" required>
+        <button type="submit">Cadastrar Aluno</button>
+    </form>
+
+    <h2>Alunos Cadastrados:</h2>
+    <ul id="listaTela"></ul>
+
+    <div id="janelaModal" class="modal-oculto">
+        <div class="modal-conteudo">
+            <h3 id="tituloModal">Montar Treino</h3>
+            <textarea id="textoTreino" rows="10" placeholder="Digite o treino aqui...&#10;Ex:&#10;- Agachamento 4x10&#10;- Leg Press 3x12"></textarea>
+            <div class="modal-botoes">
+                <button id="btnEnviarWhats">Enviar via WhatsApp</button>
+                <button id="btnFecharModal" onclick="fecharJanelaTreino()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="janelaHistorico" class="modal-oculto">
+        <div class="modal-conteudo">
+            <h3 id="tituloHistorico">Histórico de Treinos</h3>
+            <div id="listaHistoricoTreinos"></div>
+            <div class="modal-botoes">
+                <button id="btnFecharHistorico" onclick="fecharJanelaHistorico()">Fechar Histórico</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

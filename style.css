@@ -1,0 +1,294 @@
+/* CONFIGURAÇÃO GERAL DO FUNDO E DA LETRA */
+
+body {
+    background-color: #121214;
+    /* FUNDO ESCURO MODERNO */
+    color: #e1e1e6;
+    /* TEXTO BRANCO */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #00b37e;
+    /* VERDE ESTILO ACADEMIA/SAÚDE */
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+h2 {
+    color: #c4c4cc;
+    font-size: 1, 4rem;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+
+/* FORMULÁRIO DE CADASTRO */
+
+#formCadastro {
+    background-color: #202024;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #29292e;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+}
+
+#formCadastro input {
+    width: 100%;
+    background-color: #121214;
+    border: 1px solid #292922;
+    color: #ffffff;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+#formCadastro input:focus {
+    border-color: #00b37e;
+    outline: none;
+}
+
+#formCadastro button {
+    width: 100%;
+    background-color: #00b37e;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#formCadastro button:hover {
+    background-color: #00075f;
+}
+
+
+/* LISTA DE ALUNOS (CARDS) */
+
+#listaTela {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+#listaTela li {
+    background-color: #202024;
+    border: 1px solid #29292e;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, border-color 0.2s;
+    box-sizing: border-box;
+}
+
+
+/* Efeito do card subindo e brilhando ao passar o mouse */
+
+#listaTela li:hover {
+    transform: translateY(-2px);
+    border-color: #00b37e;
+}
+
+.aluno-info {
+    flex: 1;
+    color: #c4c4cc;
+    font-size: 15px;
+}
+
+.link-nome {
+    color: #ffffff;
+    font-size: 16px;
+    transition: color 0.2s;
+}
+
+.link-nome:hover {
+    color: #00b37e;
+}
+
+
+/* BOTÕES DOS CARDS */
+
+.aluno-botoes {
+    display: flex;
+}
+
+.btn-whatsapp {
+    background-color: #29292e;
+    color: #00b37e;
+    border: 1px solid #00b37e;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    /*Espaçamento manual (evitando o gáp) */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-whatsapp:hover {
+    background-color: #00b37e;
+    color: #ffffff;
+}
+
+.btn-deletar {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0;
+    /* Escondido por padrão */
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+
+/* Exibe o botão de deletar sutilmente apenas quando passa o mouse no card */
+
+#listaTela li:hover .btn-deletar {
+    opacity: 1;
+}
+
+.btn-deletar:hover {
+    transform: scale(1.2);
+}
+
+
+/* JANELAS FLUTUANTES (MODAIS) */
+
+.modal-oculto {
+    display: none;
+}
+
+.modal-visivel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-conteudo {
+    background-color: #202020;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #29292e;
+    box-sizing: border-box;
+}
+
+.modal-conteudo h3 {
+    color: #00b37e;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+textarea {
+    width: 100%;
+    background-color: #121214;
+    border: 1px solid #29292e;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 15px;
+    resize: vertical;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+textarea:focus {
+    border-color: #00b37e;
+    outline: none;
+}
+
+.modal-botoes {
+    display: flex;
+    margin-top: 20px;
+}
+
+#btnEnviarWhats {
+    background-color: #00b37e;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+#btnEnviarWhats:hover {
+    background-color: #00075f;
+}
+
+#btnFecharModal,
+#btnFecharHistorico {
+    background-color: #29292e;
+    color: #a8a8b3;
+    border: 1px solid #29292e;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#btnFecharModal:hover,
+#btnFecharHistorico:hover {
+    background-color: #323238;
+    color: #ffffff;
+}
+
+
+/* ROLAGEM DE HISTÓRICO */
+
+#listaHistoricoTreinos {
+    max-height: 280px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 8px;
+}
+
+
+/* Costomização sutil da barra de rolagem (Scrollbar) */
+
+#listaHistorico::-webkit-scrollbar {
+    width: 6px;
+}
+
+#listaHistoricoTreinos::-webkit-scrollbar-thumb {
+    background-color: #29292e;
+    border-radius: 3px;
+}
+
+.item-historico {
+    text-align: left;
+}
