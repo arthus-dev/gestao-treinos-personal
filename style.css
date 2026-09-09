@@ -13,22 +13,6 @@ body {
     align-items: center;
 }
 
-h1 {
-    color: #00b37e;
-    /* VERDE ESTILO ACADEMIA/SAÚDE */
-    margin-bottom: 30px;
-    font-size: 2rem;
-}
-
-h2 {
-    color: #c4c4cc;
-    font-size: 1, 4rem;
-    margin-top: 40px;
-    width: 100%;
-    max-width: 600px;
-    text-align: left;
-}
-
 
 /* FORMULÁRIO DE CADASTRO */
 
@@ -291,4 +275,213 @@ textarea:focus {
 
 .item-historico {
     text-align: left;
+}
+
+h1 {
+    color: #00b37e;
+    /* VERDE ESTILO ACADEMIA/SAÚDE */
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+h2 {
+    color: #c4c4cc;
+    font-size: 1, 4rem;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+
+/* --- TELA DE CADASTRO E LOGIN (AUTH) --- */
+
+
+/* Container que cobre a tela inteira */
+
+.auth-container {
+    position: absolute;
+    /* Permite que a página estique se o conteúdo for maior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    /* Garante que ocupa no mínimo a tela toda */
+    background-color: #121214;
+    /* Fundo bem escuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Garante que fica por cima de tudo */
+    padding: 40px 20px;
+    /* Aumenta o espaço em cima e embaixo */
+    box-sizing: border-box;
+    /* Garante que o padding não estoure a largura */
+    overflow-y: auto;
+    /* Se a tela for muito pequena, o usuário consegue rolar para ver o resto do formulário */
+}
+
+
+/* Caixa do formulário */
+
+.auth-box {
+    background-color: #202024;
+    /* Cinza um pouco mais claro */
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border: 1px solid #323238;
+    color: #e1e1e6;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.auth-box h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.auth-box p {
+    font-size: 14px;
+    color: #a8a8b3;
+    margin-bottom: 24px;
+}
+
+
+/* Campo de digitação */
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #e1e1e6;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #121214;
+    background-color: #121214;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    /* Muito importante para o input não sair para fora da caixa */
+}
+
+.input-group input:focus {
+    border-color: #00075f;
+    /* Verde estilo destaque, mude se preferir azul/roxo */
+}
+
+
+/* Botão de enviar */
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background-color: #00075f;
+    /* Cor de destaque */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.btn-auth:hover {
+    background-color: #00b37e;
+}
+
+
+/* Rodapé das telas de Auth */
+
+.auth-footer {
+    margin-top: 24px;
+    font-size: 14px;
+    color: #a8a8b3;
+}
+
+.auth-footer a {
+    color: #00075f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Classe utilitária para esconder elementos */
+
+.hide {
+    display: none !important;
+}
+
+.logo-sistema {
+    font-size: 28px;
+    font-weight: 800;
+    color: #00d2df;
+    /* Ou colocar a cor azul/roxa que está usando no botão! */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    /*letter-spacing: 1px;*/
+    text-shadow: 0 0 10px rgba(0, 210, 223, 0.3);
+    /* Sombra de luz neon */
+}
+
+.btn-sair {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e23e44;
+    /* Vermelho discreto */
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+    /* Garante que o botão fique na camada mais alta de todas */
+    transition: background-color 0.2s;
+}
+
+.btn-sair:hover {
+    background-color: #bf1f24;
+}
+
+
+/* Ajuste para o painel aceitar o botão absoluto do lado direito */
+
+body {
+    position: relative;
+}
+
+
+/* Ajuste específico para a logo dentro do painel de alunos */
+
+.logo-painel {
+    margin-top: 20px;
+    /* Dá um espaço do topo da página */
+    text-align: center;
+    /* Garante que o texto fique centralizado */
+    display: block;
+    /* Ocupa a linha para centralizar */
+    width: 100%;
 }

@@ -1,46 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Trainer</title>
+    <title>Login - Personal System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Personal System - Gestão de Treinos</h1>
+    <div class="auth-container">
 
-    <form id="formCadastro">
-        <input type="text" id="nomeAluno" placeholder="Nome do Aluno" required>
-        <input type="number" id="idadeAluno" placeholder="Idade" required>
-        <input type="text" id="objetivoAluno" placeholder="Objetivo (ex: Emagrecer)" required>
-        <button type="submit">Cadastrar Aluno</button>
-    </form>
+        <!-- FORMULÁRIO DE CADASTRO -->
+        <div id="box-cadastro" class="auth-box">
+            <h1 class="logo-sistema">🏋️‍♂️ Gestão de Treinos</h1>
+            <h2>Criar Conta de Personal</h2>
+            <p>Cadastre-se para gerenciar seus alunos e treinos</p>
 
-    <h2>Alunos Cadastrados:</h2>
-    <ul id="listaTela"></ul>
+            <form id="cadastroPersonal">
+                <div class="input-group">
+                    <label for="cad-nome">Nome Completo</label>
+                    <input type="text" id="cad-nome" placeholder="Digite seu nome" required>
+                </div>
 
-    <div id="janelaModal" class="modal-oculto">
-        <div class="modal-conteudo">
-            <h3 id="tituloModal">Montar Treino</h3>
-            <textarea id="textoTreino" rows="10" placeholder="Digite o treino aqui...&#10;Ex:&#10;- Agachamento 4x10&#10;- Leg Press 3x12"></textarea>
-            <div class="modal-botoes">
-                <button id="btnEnviarWhats">Enviar via WhatsApp</button>
-                <button id="btnFecharModal" onclick="fecharJanelaTreino()">Cancelar</button>
-            </div>
+                <div class="input-group">
+                    <label for="cad-email">E-mail</label>
+                    <input type="email" id="cad-email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="cad-senha">Senha</label>
+                    <input type="password" id="cad-senha" placeholder="Crie uma senha" required>
+                </div>
+
+                <button type="submit" class="btn-auth">Cadastrar</button>
+            </form>
+
+            <p class="auth-footer">
+                Já tem conta? <a href="#" id="ir-para-login">Faça Login</a>
+            </p>
         </div>
-    </div>
 
-    <div id="janelaHistorico" class="modal-oculto">
-        <div class="modal-conteudo">
-            <h3 id="tituloHistorico">Histórico de Treinos</h3>
-            <div id="listaHistoricoTreinos"></div>
-            <div class="modal-botoes">
-                <button id="btnFecharHistorico" onclick="fecharJanelaHistorico()">Fechar Histórico</button>
-            </div>
+        <!-- FORMULÁRIO DE LOGIN -->
+        <div id="box-login" class="auth-box hide">
+            <h1 class="logo-sistema">🏋️‍♂️ Gestão de Treinos</h1>
+            <h2>Login do Personal</h2>
+            <p>Acesse seu painel de controle</p>
+
+            <form id="loginPersonal">
+                <div class="input-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="login-senha">Senha</label>
+                    <input type="password" id="login-senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <button type="submit" class="btn-auth">Entrar</button>
+            </form>
+
+            <p class="auth-footer">
+                Não tem conta? <a href="#" id="ir-para-cadastro">Cadastrar-se grátis</a>
+            </p>
         </div>
+
     </div>
 
     <script src="script.js"></script>

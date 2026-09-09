@@ -1,3 +1,7 @@
+/* =======================================================
+   PARTE 1: LÓGICA DOS ALUNOS E TREINOS (Roda no painel.html)
+   ======================================================= */
+
 // 1. FUNÇÃO READ (LER) - Busca os alunos salvos no navegador
 function obterAlunos() {
     const alunosAtuais = localStorage.getItem('listaAlunos');
@@ -13,44 +17,48 @@ function cadastrarAluno(nome, idade, objetivo) {
         nome: nome,
         idade: idade,
         objetivo: objetivo,
-        historicoTreinos: [] // NOVO: Agora todo aluno nasce com uma lista de treinos vazia!
+        historicoTreinos: []
     };
 
     listaDeAlunos.push(novoAluno);
     localStorage.setItem('listaAlunos', JSON.stringify(listaDeAlunos));
 }
 
-// VARIÁVEIS GLOBAIS PARA CONTROLAR O ALUNO SELECIONADO
+// VARIÁVEL GLOBAL PARA CONTROLAR O ALUNO SELECIONADO
 let alunoSelecionadoAtual = "";
 
 // 3. FUNÇÃO PARA ATUALIZAR A LISTA NA TELA
 function atualizarListaNaTela() {
     const listaTela = document.getElementById('listaTela');
-    const listaDeAlunos = obterAlunos();
+    if (!listaTela) return; // Se não estiver na tela do painel, ignora
 
+    const listaDeAlunos = obterAlunos();
     listaTela.innerHTML = "";
 
     listaDeAlunos.forEach(function(aluno) {
         const itemLista = document.createElement('li');
 
-        // NOVO: Adicionamos a classe 'link-nome' ao redor do nome do aluno para torná-lo clicável
         itemLista.innerHTML = `
             <div class="aluno-info">
                 <span class="link-nome" style="cursor:pointer; text-decoration: underline;"><strong>${aluno.nome}</strong></span> - ${aluno.objetivo}
             </div>
             <div class="aluno-botoes">
                 <button class="btn-whatsapp">Treinos 📱</button>
+                <button class="btn-editar">✏️</button>
                 <button class="btn-deletar">❌</button>
             </div>
         `;
 
-        // NOVO: Escuta o clique no NOME do aluno para abrir o histórico
         itemLista.querySelector('.link-nome').addEventListener('click', function() {
             abrirJanelaHistorico(aluno.id);
         });
 
         itemLista.querySelector('.btn-whatsapp').addEventListener('click', function() {
             abrirJanelaTreino(aluno.nome);
+        });
+
+        itemLista.querySelector('.btn-editar').addEventListener('click', function() {
+            editarAluno(aluno.id);
         });
 
         itemLista.querySelector('.btn-deletar').addEventListener('click', function() {
@@ -76,19 +84,16 @@ function fecharJanelaTreino() {
 // FUNÇÕES DA SEGUNDA JANELA (VER HISTÓRICO)
 function abrirJanelaHistorico(idDoAluno) {
     const listaDeAlunos = obterAlunos();
-    // Encontra o aluno correto pelo ID
     const aluno = listaDeAlunos.find(a => a.id === idDoAluno);
 
     if (aluno) {
         document.getElementById('tituloHistorico').innerText = `Histórico de ${aluno.nome}`;
         const containerTreinos = document.getElementById('listaHistoricoTreinos');
-        containerTreinos.innerHTML = ""; // Limpa histórico anterior da janela
+        containerTreinos.innerHTML = "";
 
-        // Se o aluno não tiver nenhum treino salvo ainda
         if (!aluno.historicoTreinos || aluno.historicoTreinos.length === 0) {
             containerTreinos.innerHTML = "<p style='color: #7c7c8a;'>Nenhum treino enviado anteriormente.</p>";
         } else {
-            // Mostra os treinos do mais novo para o mais antigo (.reverse())
             aluno.historicoTreinos.slice().reverse().forEach(function(item) {
                 const caixaTreino = document.createElement('div');
                 caixaTreino.className = "item-historico";
@@ -109,7 +114,7 @@ function fecharJanelaHistorico() {
     document.getElementById('janelaHistorico').className = "modal-oculto";
 }
 
-// 4. ESCUTANDO O FORMULÁRIO DE CADASTRO
+// 4. ESCUTANDO O FORMULÁRIO DE CADASTRO DE ALUNOS
 const form = document.getElementById('formCadastro');
 if (form) {
     form.addEventListener('submit', function(evento) {
@@ -132,28 +137,20 @@ if (btnWhats) {
 
         if (treino.trim() !== "") {
             const listaDeAlunos = obterAlunos();
-
-            // Encontra o aluno atual no banco de dados para salvar o treino dele
             const aluno = listaDeAlunos.find(a => a.nome === alunoSelecionadoAtual);
 
             if (aluno) {
-                // Se por acaso o aluno antigo não tiver a propriedade de histórico, criamos agora
                 if (!aluno.historicoTreinos) aluno.historicoTreinos = [];
-
-                // Formata a data atual (Ex: 11/07/2026)
                 const dataAtual = new Date().toLocaleDateString('pt-BR');
 
-                // Salva o treino e a data no histórico dele
                 aluno.historicoTreinos.push({
                     data: dataAtual,
                     treino: treino
                 });
 
-                // Atualiza o banco de dados do navegador
                 localStorage.setItem('listaAlunos', JSON.stringify(listaDeAlunos));
             }
 
-            // Envia para o WhatsApp
             const mensagem = `Olá, ${alunoSelecionadoAtual}! 💪\n\nAqui está o seu treino de hoje:\n\n${treino}`;
             const linkWhatsapp = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`;
             window.open(linkWhatsapp, '_blank');
@@ -165,7 +162,33 @@ if (btnWhats) {
     });
 }
 
-// FUNÇÃO DELETAR
+// FUNÇÃO EDITAR ALUNO
+function editarAluno(idDoAluno) {
+    const listaDeAlunos = obterAlunos();
+    const aluno = listaDeAlunos.find(a => a.id === idDoAluno);
+
+    if (!aluno) return;
+
+    const novoNome = prompt("Editar Nome do Aluno:", aluno.nome);
+    if (novoNome === null) return; //Se cancelar, não altera nada
+
+    const novaIdade = prompt("Editar Idade do Aluno:", aluno.idade);
+    if (novaIdade === null) return;
+
+    const novoObjetivo = prompt("Editar Objetivo do Aluno:", aluno.objetivo);
+    if (novoObjetivo === null) return;
+
+    // Atualiza os dados no objetivo
+    aluno.nome = novoNome.trim() !== "" ? novoNome : aluno.nome;
+    aluno.idade = novaIdade.trim() !== "" ? novaIdade : aluno.idade;
+    aluno.objetivo = novoObjetivo.trim() !== "" ? novoObjetivo : aluno.objetivo;
+
+    // Salvar a lista atualizada no localStorage e recarrega a tela
+    localStorage.setItem('listaAlunos', JSON.stringify(listaDeAlunos));
+    atualizarListaNaTela();
+}
+
+// FUNÇÃO DELETAR ALUNO
 function deletarAluno(idDoAluno) {
     if (confirm("Tem certeza que deseja remover este aluno?")) {
         const listaDeAlunos = obterAlunos();
@@ -175,5 +198,98 @@ function deletarAluno(idDoAluno) {
     }
 }
 
-// MOSTRAR OS ALUNOS SALVOS ASSIM QUE A PÁGINA ABRIR
+// Atualiza a lista na tela se estiver no painel
 atualizarListaNaTela();
+
+
+/* =======================================================
+   PARTE 2: AUTENTICAÇÃO E REDIRECIONAMENTO (index.html)
+   ======================================================= */
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Se já estiver logado e tentar acessar a tela de login, manda direto pro painel
+    if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
+        if (localStorage.getItem("personalLogado") === "true") {
+            window.location.href = "painel.html";
+        }
+    }
+
+    const boxCadastro = document.getElementById("box-cadastro");
+    const boxLogin = document.getElementById("box-login");
+    const irParaLogin = document.getElementById("ir-para-login");
+    const irParaCadastro = document.getElementById("ir-para-cadastro");
+
+    const formCadastro = document.getElementById("cadastroPersonal");
+    const formLogin = document.getElementById("loginPersonal");
+
+    // Alternar telas na index.html
+    if (irParaLogin && irParaCadastro) {
+        irParaLogin.addEventListener("click", function(e) {
+            e.preventDefault();
+            boxCadastro.classList.add("hide");
+            boxLogin.classList.remove("hide");
+        });
+
+        irParaCadastro.addEventListener("click", function(e) {
+            e.preventDefault();
+            boxLogin.classList.add("hide");
+            boxCadastro.classList.remove("hide");
+        });
+    }
+
+    // Lógica de Criar Conta
+    if (formCadastro) {
+        formCadastro.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById("cad-nome").value;
+            const email = document.getElementById("cad-email").value;
+            const senha = document.getElementById("cad-senha").value;
+
+            const dadosPersonal = { nome, email, senha };
+            localStorage.setItem("contaPersonal", JSON.stringify(dadosPersonal));
+
+            alert(`Conta criada com sucesso, Professor(a) ${nome}!`);
+            formCadastro.reset();
+            boxCadastro.classList.add("hide");
+            boxLogin.classList.remove("hide");
+        });
+    }
+
+    // Lógica de Entrar
+    if (formLogin) {
+        formLogin.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const emailDigitado = document.getElementById("login-email").value;
+            const senhaDigitada = document.getElementById("login-senha").value;
+            const dadosSalvos = localStorage.getItem("contaPersonal");
+
+            if (!dadosSalvos) {
+                alert("Nenhum personal cadastrado neste navegador. Crie uma conta primeiro!");
+                return;
+            }
+
+            const conta = JSON.parse(dadosSalvos);
+
+            if (emailDigitado === conta.email && senhaDigitada === conta.senha) {
+                alert(`Seja bem-vindo de volta, ${conta.nome}!`);
+                localStorage.setItem("personalLogado", "true");
+
+                // REDIRECIONA PARA A PÁGINA DO PAINEL!
+                window.location.href = "painel.html";
+            } else {
+                alert("E-mail ou senha incorretos! Tente novamente.");
+            }
+        });
+    }
+}); // <-- Fim do DOMContentLoaded
+
+
+/* =======================================================
+   PARTE 3: FUNÇÃO GLOBAL DE LOGOUT (Fora de tudo)
+   ======================================================= */
+function fazerLogout() {
+    localStorage.removeItem("personalLogado");
+    window.location.href = "index.html";
+}
